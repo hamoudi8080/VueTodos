@@ -27,3 +27,11 @@ npm run dev
 ```sh
 npm run build
 ```
+```sh
+npm install vue-router
+```
+
+```sh
+https://iconify.design/docs/icon-components/vue/
+npm install --save-dev @iconify/vue
+```
