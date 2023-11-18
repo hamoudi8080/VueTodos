@@ -35,3 +35,9 @@ npm install vue-router
 https://iconify.design/docs/icon-components/vue/
 npm install --save-dev @iconify/vue
 ```
+
+```sh
+uid library to generate unique identifiers
+npm install uid
+```
+
