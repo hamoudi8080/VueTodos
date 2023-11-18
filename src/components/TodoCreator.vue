@@ -1,26 +1,77 @@
 <script setup>
-import TodoCreator from "../components/TodoCreator.vue";
+import { defineEmits, reactive } from "vue";
+
+const todoState = reactive({
+  todo: "",
+  invalid: null,
+  errMsg: "",
+});
+
+
+const emit = defineEmits(["create-todo"]);
+
+const createTodo = () => {
+  todoState.invalid = null;
+  if (todoState.todo !== "") {
+    emit("create-todo", todoState.todo);
+    todoState.todo = "";
+    return;
+  }
+
+  todoState.invalid = true;
+  todoState.errMsg = "Todo value cannot be empty";
+
+};
 </script>
 
 <template>
-  <main>
-    <h1>Create Todo</h1>
-    <TodoCreator />
-  </main>
+  <div class="input-wrap" :class="{'input-err' : todoState.invalid }">
+    
+    <input type="text" v-model="todoState.todo" />
+    <button @click="createTodo()">Create</button>
+  </div>
+  <!-- v-if if todoState is null this p tag not rendered -->
+  <!-- <p v-if="todoState.invalid" class="err-msg">{{todoState.errMsg }}</p> -->
+
+  <!-- v-show if todoState is null this p tag is rendered but display: none ;) -->
+  <p v-show="todoState.invalid" class="err-msg">{{ todoState.errMsg }}</p>
 </template>
 
-<style scoped lang="scss">
-main {
+<style lang="scss" scoped>
+.input-wrap {
   display: flex;
-  flex-direction: column;
-  max-width: 500px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 40px 16px;
+  transition: 250ms ease;
+  border: 2px solid #41b080;
 
-  h1 {
-    margin-bottom: 16px;
-    text-align: center;
+  &:focus-within {
+    box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1),
+      0 -2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  input {
+    width: 100%;
+    padding: 8px 6px;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    padding: 8px 16px;
+    border: none;
+  }
+  &.input-err {
+    border-color: red;
   }
 }
+
+.err-msg {
+  margin-top: 6px;
+  font-size: 12px;
+  text-align: center;
+  color: red;
+}
+
 </style>

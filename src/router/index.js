@@ -8,6 +8,7 @@ const router = createRouter({
       path: "/",
       name: "todos",
       component: TodosView,
+      
     },
     {
       path: "/about",
